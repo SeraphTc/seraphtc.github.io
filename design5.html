@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>李华卿&#39;s Home | 20171107接单系统设计</title>
+    <meta name="description" content="李华卿&#39;s Home">
+    
+    
+    <link rel="preload" href="/assets/css/13.styles.6bc8c6d0.css" as="style"><link rel="preload" href="/assets/js/app.4d07fc9d.js" as="script"><link rel="preload" href="/assets/js/6.584cd904.js" as="script"><link rel="prefetch" href="/assets/js/7.c8bb1d74.js"><link rel="prefetch" href="/assets/js/1.1f3708cf.js"><link rel="prefetch" href="/assets/js/2.cf3a80ad.js"><link rel="prefetch" href="/assets/js/3.f92948b9.js"><link rel="prefetch" href="/assets/js/4.02a59966.js"><link rel="prefetch" href="/assets/js/5.82eaf450.js"><link rel="prefetch" href="/assets/js/0.03b1b08c.js"><link rel="prefetch" href="/assets/js/8.2aeb774c.js"><link rel="prefetch" href="/assets/js/9.bc65ed26.js"><link rel="prefetch" href="/assets/js/10.522b477b.js"><link rel="prefetch" href="/assets/js/11.942e6fb3.js"><link rel="prefetch" href="/assets/js/12.b5f3f157.js">
+    <link rel="stylesheet" href="/assets/css/13.styles.6bc8c6d0.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      李华卿's Home
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">个人简介</a></div><div class="nav-item"><a href="/share.html" class="nav-link">分享</a></div><div class="nav-item"><a href="/design.html" class="nav-link">梳理与设计</a></div><!----></nav></div></header><div class="sidebar-mask"></div><div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">个人简介</a></div><div class="nav-item"><a href="/share.html" class="nav-link">分享</a></div><div class="nav-item"><a href="/design.html" class="nav-link">梳理与设计</a></div><!----></nav><ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading open"><span>20171107接单系统设计</span><!----></p><ul class="sidebar-group-items"><li><a href="/design5.html#一、背景与问题" class="sidebar-link">一、背景与问题</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/design5.html#二、改进策略" class="sidebar-link">二、改进策略</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/design5.html#_1-接单系统主要职责-服务-划分为：订单分发以及接单操作。" class="sidebar-link">1.接单系统主要职责(服务)划分为：订单分发以及接单操作。</a></li><li class="sidebar-sub-header"><a href="/design5.html#_2-task横化、竖化" class="sidebar-link">2.task横化、竖化</a></li><li class="sidebar-sub-header"><a href="/design5.html#_3-模板自动化测试" class="sidebar-link">3.模板自动化测试</a></li><li class="sidebar-sub-header"><a href="/design5.html#_4-业务监控" class="sidebar-link">4.业务监控</a></li><li class="sidebar-sub-header"><a href="/design5.html#_5-领域模型重新review" class="sidebar-link">5.领域模型重新review</a></li><li class="sidebar-sub-header"><a href="/design5.html#_6-接单系统管理后台" class="sidebar-link">6.接单系统管理后台</a></li></ul></li></ul></div></li></ul></div><div class="page"><div class="content"><h1 id="_20171107接单系统设计"><a href="#_20171107接单系统设计" aria-hidden="true" class="header-anchor">#</a> 20171107接单系统设计</h1><h2 id="一、背景与问题"><a href="#一、背景与问题" aria-hidden="true" class="header-anchor">#</a> 一、背景与问题</h2><pre><code>1.接单操作入口分散
+
+2.dispatch task数量增长过快，1kw/月
+
+3.模板配置容易出现问题
+
+4.缺少业务监控
+
+5.任务设计有些泛化
+
+6.接单缺少系统管理后台
+</code></pre><p></p><h2 id="二、改进策略"><a href="#二、改进策略" aria-hidden="true" class="header-anchor">#</a> 二、改进策略</h2><h3 id="_1-接单系统主要职责-服务-划分为：订单分发以及接单操作。"><a href="#_1-接单系统主要职责-服务-划分为：订单分发以及接单操作。" aria-hidden="true" class="header-anchor">#</a> 1.接单系统主要职责(服务)划分为：订单分发以及接单操作。</h3><p>1）提供接单服务</p><p>2）修改新订单分发服务为thrift，重新定义参数。</p><img src="img1/d5-1.png"><h3 id="_2-task横化、竖化"><a href="#_2-task横化、竖化" aria-hidden="true" class="header-anchor">#</a> 2.task横化、竖化</h3><p>短期规划：</p><pre><code>1）数据自动归档，目前是在DBA上手动申请任务，计划任务完成后自动归档。
+
+2）非接单相关任务迁移至履约
+</code></pre><p>长期规划：</p><pre><code>PlanA：目前业务形态相对稳定，可以将大部分分发操作放在一个大横表中。
+
+PlanB：任务执行情况下沉到各个渠道，或根据渠道划分业务表。
+</code></pre><p></p><h3 id="_3-模板自动化测试"><a href="#_3-模板自动化测试" aria-hidden="true" class="header-anchor">#</a> 3.模板自动化测试</h3><pre><code>1）建立模板备选表，进行线上自动化测试，测试通过后同步到模板表
+
+2）排列组合各种开关（优先开店宝、自动接单、ERP等），进行虚拟订单每个分发状态的计算，生成结果报告，分析正确性。
+</code></pre><p></p><h3 id="_4-业务监控"><a href="#_4-业务监控" aria-hidden="true" class="header-anchor">#</a> 4.业务监控</h3><pre><code>1）接单入口业务监控打点，零流量监控
+
+2）各渠道接单量打点，零流量监控
+
+3）响应时间记录
+</code></pre><p></p><h3 id="_5-领域模型重新review"><a href="#_5-领域模型重新review" aria-hidden="true" class="header-anchor">#</a> 5.领域模型重新review</h3><p>TODO 重新收敛</p><p></p><h3 id="_6-接单系统管理后台"><a href="#_6-接单系统管理后台" aria-hidden="true" class="header-anchor">#</a> 6.接单系统管理后台</h3><pre><code>1）仪表盘：今日接单量、率、反馈时间、历史统计数据
+
+2）模板配置等管理功能
+
+3）订单轨迹查询
+</code></pre><p></p><p></p><p>三、排期</p><table><thead><tr><th>方向</th><th style="text-align:center">子任务</th><th style="text-align:center">优先级</th><th style="text-align:center">预计开始时间</th><th style="text-align:right">预计结束时间</th></tr></thead><tbody><tr><td>主要职能搭建</td><td style="text-align:center">提供接单服务</td><td style="text-align:center">P1</td><td style="text-align:center">11.13</td><td style="text-align:right">11.15</td></tr><tr><td>主要职能搭建</td><td style="text-align:center">推送使用方迁移	P1</td><td style="text-align:center">11.16</td><td style="text-align:center">11.24</td><td style="text-align:right"></td></tr><tr><td>主要职能搭建</td><td style="text-align:center">提供新的推单服务</td><td style="text-align:center">P1</td><td style="text-align:center">11.16</td><td style="text-align:right">11.17</td></tr><tr><td>解决Task增长问题</td><td style="text-align:center">自动归档job</td><td style="text-align:center">P2</td><td style="text-align:center">11.20</td><td style="text-align:right">11.22</td></tr><tr><td>解决Task增长问题</td><td style="text-align:center">推动非接单相关事件迁移</td><td style="text-align:center">P2</td><td style="text-align:center">待定</td><td style="text-align:right">待定</td></tr><tr><td>模板自动化测试</td><td style="text-align:center">自动化测试mock、测试过程设计与开发</td><td style="text-align:center">P3</td><td style="text-align:center">11.23</td><td style="text-align:right">11.28</td></tr><tr><td>业务监控</td><td style="text-align:center">打点及配置监控，监控准确性测试</td><td style="text-align:center">P2</td><td style="text-align:center">11.29</td><td style="text-align:right">12.4</td></tr><tr><td>领域模型重新review</td><td style="text-align:center">对现有业务、过程做收敛，重新review领域模型</td><td style="text-align:center">P3</td><td style="text-align:center">12.5</td><td style="text-align:right">12.8</td></tr><tr><td>接单系统管理后台</td><td style="text-align:center">仪表盘</td><td style="text-align:center">P3</td><td style="text-align:center">12.11</td><td style="text-align:right">12.15</td></tr><tr><td>接单系统管理后台</td><td style="text-align:center">配置管理功能</td><td style="text-align:center">P3</td><td style="text-align:center">12.18</td><td style="text-align:right">12.20</td></tr><tr><td>接单系统管理后台</td><td style="text-align:center">订单轨迹查询</td><td style="text-align:center">P3</td><td style="text-align:center">12.21</td><td style="text-align:right">12.27</td></tr></tbody></table></div><!----><!----></div></div></div>
+    <script src="/assets/js/6.584cd904.js" defer></script><script src="/assets/js/app.4d07fc9d.js" defer></script>
+  </body>
+</html>

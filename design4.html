@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>李华卿&#39;s Home | Order &amp; Dispatch重试策略</title>
+    <meta name="description" content="李华卿&#39;s Home">
+    
+    
+    <link rel="preload" href="/assets/css/13.styles.6bc8c6d0.css" as="style"><link rel="preload" href="/assets/js/app.4d07fc9d.js" as="script"><link rel="preload" href="/assets/js/7.c8bb1d74.js" as="script"><link rel="prefetch" href="/assets/js/1.1f3708cf.js"><link rel="prefetch" href="/assets/js/2.cf3a80ad.js"><link rel="prefetch" href="/assets/js/3.f92948b9.js"><link rel="prefetch" href="/assets/js/4.02a59966.js"><link rel="prefetch" href="/assets/js/5.82eaf450.js"><link rel="prefetch" href="/assets/js/6.584cd904.js"><link rel="prefetch" href="/assets/js/0.03b1b08c.js"><link rel="prefetch" href="/assets/js/8.2aeb774c.js"><link rel="prefetch" href="/assets/js/9.bc65ed26.js"><link rel="prefetch" href="/assets/js/10.522b477b.js"><link rel="prefetch" href="/assets/js/11.942e6fb3.js"><link rel="prefetch" href="/assets/js/12.b5f3f157.js">
+    <link rel="stylesheet" href="/assets/css/13.styles.6bc8c6d0.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      李华卿's Home
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">个人简介</a></div><div class="nav-item"><a href="/share.html" class="nav-link">分享</a></div><div class="nav-item"><a href="/design.html" class="nav-link">梳理与设计</a></div><!----></nav></div></header><div class="sidebar-mask"></div><div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">个人简介</a></div><div class="nav-item"><a href="/share.html" class="nav-link">分享</a></div><div class="nav-item"><a href="/design.html" class="nav-link">梳理与设计</a></div><!----></nav><ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading open"><span>Order &amp; Dispatch重试策略</span><!----></p><ul class="sidebar-group-items"><li><a href="/design4.html#_1-dispatch重试策略" class="sidebar-link">1.dispatch重试策略</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/design4.html#a-执行没有得到明确答复（如timeout，runtimeexception等）时由job驱动不断进行重试。" class="sidebar-link">a.执行没有得到明确答复（如timeout，runtimeException等）时由job驱动不断进行重试。</a></li><li class="sidebar-sub-header"><a href="/design4.html#b-需要强一致性及比较重要的核心操作进行补偿。" class="sidebar-link">b.需要强一致性及比较重要的核心操作进行补偿。</a></li></ul></li><li><a href="/design4.html#_2-order兜底策略" class="sidebar-link">2.order兜底策略</a><ul class="sidebar-sub-headers"></ul></li></ul></div></li></ul></div><div class="page"><div class="content"><h1 id="order-dispatch重试策略"><a href="#order-dispatch重试策略" aria-hidden="true" class="header-anchor">#</a> Order &amp; Dispatch重试策略</h1><p><strong>引言:系统出问题时，不光要关注出什么问题，更需要了解这里会出问题。</strong></p><h2 id="_1-dispatch重试策略"><a href="#_1-dispatch重试策略" aria-hidden="true" class="header-anchor">#</a> 1.dispatch重试策略</h2><p>目标：dispatch需要保证每个分发任务触达到每个渠道并得到各渠道明确答复(接单、拒单、短信、推送发送不成功/不成功等)，在没有明确答复时并且在任务超时时间前，进行重试或补偿</p><p>策略：并行使用重试和补偿机制</p><h3 id="a-执行没有得到明确答复（如timeout，runtimeexception等）时由job驱动不断进行重试。"><a href="#a-执行没有得到明确答复（如timeout，runtimeexception等）时由job驱动不断进行重试。" aria-hidden="true" class="header-anchor">#</a> a.执行没有得到明确答复（如timeout，runtimeException等）时由job驱动不断进行重试。</h3><p>Interface中增加校验是否是明确答复的method,method校验失败时直接throw Exception或return false，随后job查出未执行的任务进行重试</p><img src="img1/d4-1.png"><h3 id="b-需要强一致性及比较重要的核心操作进行补偿。"><a href="#b-需要强一致性及比较重要的核心操作进行补偿。" aria-hidden="true" class="header-anchor">#</a> b.需要强一致性及比较重要的核心操作进行补偿。</h3><p>dispatch_template中增加是否需要补偿的配置，例如新建订单推送给cc和vendor，这种template需要进行补偿。</p><p>Interface中增加补偿方法思路为：查询信息 →不一致时重新推送</p><p>dispatch_task中增加一个状态为“已核查”(名称待定)，任务执行状态最终为已核查，由已完成转变，由job驱动进行一致性检测及补偿</p><pre class="language-bash"><code>package com.sankuai.meituan.resv.dispatch.executor<span class="token punctuation">;</span>
+
+<span class="token function">import</span> com.sankuai.meituan.resv.dispatch.domain.DispatchTask<span class="token punctuation">;</span>
+<span class="token function">import</span> com.sankuai.meituan.resv.dispatch.service.DispatchTemplateService<span class="token punctuation">;</span>
+<span class="token function">import</span> com.sankuai.meituan.resv.dispatch.service.InformChannelService<span class="token punctuation">;</span>
+
+<span class="token function">import</span> javax.annotation.Resource<span class="token punctuation">;</span>
+
+/**
+ * Created by lihuaqing on 2017/3/15.
+ */
+public interface ExecutorInterface <span class="token punctuation">{</span>
+
+
+    Boolean execute<span class="token punctuation">(</span>DispatchTask dispatchTask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Boolean isSupport<span class="token punctuation">(</span>DispatchTask dispatchTask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    default Boolean validateExcuteSuccess<span class="token punctuation">(</span>Object result<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span>  <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    default void compensate<span class="token punctuation">(</span>DispatchTask dispatchTask<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    default Boolean isConsistent<span class="token punctuation">(</span>DispatchTask dispatchTask<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre><h2 id="_2-order兜底策略"><a href="#_2-order兜底策略" aria-hidden="true" class="header-anchor">#</a> 2.order兜底策略</h2><p><strong>目标</strong>：order需要保证每个订单不会一致维持在非最终状态，最终状态包括（拒单、到店、未到店、取消），按一定规则由job驱动将订单非从最终状态自动流转到最终状态。</p><p><strong>目前已有的策略</strong>：3天自动到店（接单→到店）</p><p><strong>缺少的策略</strong>：自动拒单（新建 →拒单）</p><p><strong>自动拒单策略:</strong><strong>a.规则</strong>：当前时间&gt;预约就餐时间</p><p><strong>b.存在的风险</strong>:新建订单分发任务执行和拿到结果之前存在时间差，理论上可能出现11:59进行ivr外呼、12：00自动拒单、12:01商家才按键接单的情况，会早上商家和系统认知上的不一致。</p><p><strong>c.策略</strong>（choose one）：</p><pre><code>planA（参考电商支付超时情景，先关闭入口等一段时间没支付回调后，才超时）：增加状态“预拒单”(名称待定)，此状态下关闭该订单操作入口（商家后台、开店宝、vendor推送拒单），可以理解为已进行订单拒单操作流转，但如果此阶段有接单操作，依旧可以流转到接单（不会被订单流转规则限制），5min后流转到拒单。
+planB  (针对目前预订业务)：目前存在此风险的仅有ivr渠道，可以在订单流转规则中增加对cc的后门。
+planC  (简易版planA)：规则改完当前时间&gt;预约就餐时间+5min。
+planD （订单不做改动由CC处理，不推荐）: 按1时check订单状态，如果不匹配则赶回接单失败ivr（仅适用于天润）,或者在cc发任务完成的回调消息时check订单状态，同时重新呼叫商家告知。</code></pre></div><!----><!----></div></div></div>
+    <script src="/assets/js/7.c8bb1d74.js" defer></script><script src="/assets/js/app.4d07fc9d.js" defer></script>
+  </body>
+</html>
