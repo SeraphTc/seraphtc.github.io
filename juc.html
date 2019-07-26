@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>李华卿&#39;s Home | 原子操作类 java.util.concurrent.atomic</title>
+    <meta name="description" content="李华卿&#39;s Home">
+    
+    
+    <link rel="preload" href="/assets/css/17.styles.1e39e98b.css" as="style"><link rel="preload" href="/assets/js/app.ead676ba.js" as="script"><link rel="preload" href="/assets/js/6.02d19890.js" as="script"><link rel="prefetch" href="/assets/js/9.1069f795.js"><link rel="prefetch" href="/assets/js/1.b9e5ce15.js"><link rel="prefetch" href="/assets/js/2.c4f5c3cb.js"><link rel="prefetch" href="/assets/js/3.352ef2d1.js"><link rel="prefetch" href="/assets/js/4.29f4bcfb.js"><link rel="prefetch" href="/assets/js/5.11f49897.js"><link rel="prefetch" href="/assets/js/7.99f9bf61.js"><link rel="prefetch" href="/assets/js/8.e96e59d6.js"><link rel="prefetch" href="/assets/js/0.7c96950e.js"><link rel="prefetch" href="/assets/js/10.0b4d89e5.js"><link rel="prefetch" href="/assets/js/11.b43da688.js"><link rel="prefetch" href="/assets/js/12.0bf43118.js"><link rel="prefetch" href="/assets/js/13.9a581397.js"><link rel="prefetch" href="/assets/js/14.751337b4.js"><link rel="prefetch" href="/assets/js/15.2ba46b8f.js"><link rel="prefetch" href="/assets/js/16.5478534b.js">
+    <link rel="stylesheet" href="/assets/css/17.styles.1e39e98b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      李华卿's Home
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">个人简介</a></div><div class="nav-item"><a href="/share.html" class="nav-link">分享</a></div><div class="nav-item"><a href="/design.html" class="nav-link">梳理与设计</a></div><!----></nav></div></header><div class="sidebar-mask"></div><div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">个人简介</a></div><div class="nav-item"><a href="/share.html" class="nav-link">分享</a></div><div class="nav-item"><a href="/design.html" class="nav-link">梳理与设计</a></div><!----></nav><ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading open"><span>原子操作类 java.util.concurrent.atomic</span><!----></p><ul class="sidebar-group-items"><li><a href="/juc.html#原理" class="sidebar-link">原理</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/juc.html#思考-synchronized-vs-cas" class="sidebar-link">思考: Synchronized VS CAS</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/juc.html#原理-2" class="sidebar-link">原理</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/juc.html#结构" class="sidebar-link">结构</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/juc.html#过程" class="sidebar-link">过程</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/juc.html#原理-3" class="sidebar-link">原理</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/juc.html#背景-池-的作用" class="sidebar-link">背景 - &quot;池&quot;的作用</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/juc.html#结构-配置" class="sidebar-link">结构,配置</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/juc.html#如何调优" class="sidebar-link">如何调优</a><ul class="sidebar-sub-headers"></ul></li></ul></div></li></ul></div><div class="page"><div class="content"><h1 id="原子操作类-java-util-concurrent-atomic"><a href="#原子操作类-java-util-concurrent-atomic" aria-hidden="true" class="header-anchor">#</a> 原子操作类 java.util.concurrent.atomic</h1><h2 id="原理"><a href="#原理" aria-hidden="true" class="header-anchor">#</a> 原理</h2><p>读:volatile
+写:CAS 底层Unsafe::compareAndSwapInt实现 最底层CMPXCHG指令实现</p><h2 id="思考-synchronized-vs-cas"><a href="#思考-synchronized-vs-cas" aria-hidden="true" class="header-anchor">#</a> 思考: Synchronized VS CAS</h2><p>Synchronized:1.5前阻塞同步,性能差</p><p>CAS问题:ABA问题,通过版本或stamp解决,自旋时间长</p><h1 id="同步集合类-concurrenthashmap"><a href="#同步集合类-concurrenthashmap" aria-hidden="true" class="header-anchor">#</a> 同步集合类 ConcurrentHashMap</h1><h2 id="原理-2"><a href="#原理-2" aria-hidden="true" class="header-anchor">#</a> 原理</h2><p>1.7ConcurrentHashMap
+Segment + HashEntry(Map) 来实现，put时第一次hash出segement-&gt;加锁 -&gt; 第二次hash -&gt; put HashEntry
+写分段锁 （可重入锁）实现，提升效率 16个段 ，
+读使用volatile关键字
+一些全局操作，类似contains,size会按顺序加所有锁
+Size有两种方案（三次计算内，连续2次一样，则认为准确），如果不行则顺序加锁</p><p>1.8很接近hashMap，通过cas来实现并发控制
+其实可以看出JDK1.8版本的ConcurrentHashMap的数据结构已经接近HashMap，相对而言，ConcurrentHashMap只是增加了同步的操作来控制并发，从JDK1.7版本的ReentrantLock+Segment+HashEntry，到JDK1.8版本中synchronized+CAS+HashEntry+红黑树.</p><p>##思考</p><p>JDK1.8的实现降低锁的粒度，JDK1.7版本锁的粒度是基于Segment的，包含多个HashEntry，而JDK1.8锁的粒度就是HashEntry（首节点）
+JDK1.8版本的数据结构变得更加简单，使得操作也更加清晰流畅，因为已经使用synchronized来进行同步，所以不需要分段锁的概念，也就不需要Segment这种数据结构了，由于粒度的降低，实现的复杂度也增加了
+JDK1.8使用红黑树来优化链表，基于长度很长的链表的遍历是一个很漫长的过程，而红黑树的遍历效率是很快的，代替一定阈值的链表，这样形成一个最佳拍档
+JDK1.8为什么使用内置锁synchronized来代替重入锁ReentrantLock，我觉得有以下几点
+因为粒度降低了，在相对而言的低粒度加锁方式，synchronized并不比ReentrantLock差，在粗粒度加锁中ReentrantLock可能通过Condition来控制各个低粒度的边界，更加的灵活，而在低粒度中，Condition的优势就没有了
+JVM的开发团队从来都没有放弃synchronized，而且基于JVM的synchronized优化空间更大，使用内嵌的关键字比使用API更加自然
+在大量的数据操作下，对于JVM的内存压力，基于API的ReentrantLock会开销更多的内存，虽然不是瓶颈，但是也是一个选择依据</p><h1 id="并行闭锁-countdownlatch"><a href="#并行闭锁-countdownlatch" aria-hidden="true" class="header-anchor">#</a> 并行闭锁 CountDownLatch</h1><p>##用法
+首先是创建实例 CountDownLatch countDown = new CountDownLatch(2)
+需要同步的线程执行完之后，计数-1； countDown.countDown()
+需要等待其他线程执行完毕之后，再运行的线程，调用 countDown.await()实现阻塞同步</p><p>##场景
+并行操作:例如批量获取无依赖的rpc数据;并行执行同一层级操作;</p><p>##原理
+AQS:AQS使用一个FIFO的队列表示排队等待锁的线程，队列头节点称作“哨兵节点”或者“哑节点”，它不与任何线程关联。其他的节点与等待线程关联，每个节点维护一个等待状态waitStatus
+AQS结构:int state + 等待队列;当state = 0时 并发顺序唤醒所有等待队列</p><p>CountDownLatch:
+await内部实现流程:
+判断state计数是否为0，不是，则直接放过,执行主线程后面的代码
+大于0，则表示需要阻塞等待计数为0
+当前线程封装Node对象，进入阻塞队列
+然后就是循环尝试获取锁，直到成功（即state为0）后出队，继续执行线程后续代码</p><p>countDown内部实现流程:
+1.尝试释放锁tryReleaseShared，实现计数-1
+若计数已经小于0，则直接返回false
+否则执行计数(AQS的state)减一
+若减完之后，state==0，表示没有线程占用锁，即释放成功，然后就需要唤醒被阻塞的线程了
+2.释放并唤醒阻塞线程 doReleaseShared
+如果队列为空，即表示没有线程被阻塞（也就是说没有线程调用了 CountDownLatch#wait()方法），直接退出
+头结点如果为SIGNAL, 则依次唤醒头结点下个节点上关联的线程，并出队</p><h1 id="cyclicbarrier"><a href="#cyclicbarrier" aria-hidden="true" class="header-anchor">#</a> CyclicBarrier</h1><h2 id="结构"><a href="#结构" aria-hidden="true" class="header-anchor">#</a> 结构</h2><p>int parties 拦截,等待的线程数 final
+int count 计数器,每个线程await count--
+Generation{boolean broken = false;} 实现循环,实现是否停止
+runnable barrierCommand nextGeneration之前执行的任务</p><h2 id="过程"><a href="#过程" aria-hidden="true" class="header-anchor">#</a> 过程</h2><p>初始化CyclicBarrier
+每个线程await count--
+count = 0时换代,执行barrierCommand
+唤醒所有await线程</p><h2 id="原理-3"><a href="#原理-3" aria-hidden="true" class="header-anchor">#</a> 原理</h2><p>await 先通过ReentrantLock加锁实现同步,后续通过Condition进行await和signalAll操作</p><h1 id="线程池"><a href="#线程池" aria-hidden="true" class="header-anchor">#</a> 线程池</h1><h2 id="背景-池-的作用"><a href="#背景-池-的作用" aria-hidden="true" class="header-anchor">#</a> 背景 - &quot;池&quot;的作用</h2><p>1.复用已有资源
+2.控制资源总量</p><h2 id="结构-配置"><a href="#结构-配置" aria-hidden="true" class="header-anchor">#</a> 结构,配置</h2><p>核心线程数:有任务来,当前线程数&lt;core,则新建线程
+最大线程数:等待队列满时,有新的任务且 当前线程&lt;max,则新建线程
+等待队列: 有界,无界,同步递交
+拒绝策略: 直接拒绝,丢弃新任务,丢弃旧任务,交给提交方主线程执行
+保持时间: 超过alive时间,超过核心线程数的线程将销毁,可以开启核心线程也自动销毁的检测</p><h2 id="如何调优"><a href="#如何调优" aria-hidden="true" class="header-anchor">#</a> 如何调优</h2><p>任务分类: CPU密集型 IO密集型 混合型
+CPU密集型:线程数 = cpu数+1
+IO密集型:线程数尽可能多,因为需要等待IO,大多数rpc请求应该都属于此类
+混合型: 任务拆解</p></div><!----><!----></div></div></div>
+    <script src="/assets/js/6.02d19890.js" defer></script><script src="/assets/js/app.ead676ba.js" defer></script>
+  </body>
+</html>

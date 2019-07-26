@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>李华卿&#39;s Home | 内存模型</title>
+    <meta name="description" content="李华卿&#39;s Home">
+    
+    
+    <link rel="preload" href="/assets/css/17.styles.1e39e98b.css" as="style"><link rel="preload" href="/assets/js/app.ead676ba.js" as="script"><link rel="preload" href="/assets/js/3.352ef2d1.js" as="script"><link rel="prefetch" href="/assets/js/9.1069f795.js"><link rel="prefetch" href="/assets/js/1.b9e5ce15.js"><link rel="prefetch" href="/assets/js/2.c4f5c3cb.js"><link rel="prefetch" href="/assets/js/4.29f4bcfb.js"><link rel="prefetch" href="/assets/js/5.11f49897.js"><link rel="prefetch" href="/assets/js/6.02d19890.js"><link rel="prefetch" href="/assets/js/7.99f9bf61.js"><link rel="prefetch" href="/assets/js/8.e96e59d6.js"><link rel="prefetch" href="/assets/js/0.7c96950e.js"><link rel="prefetch" href="/assets/js/10.0b4d89e5.js"><link rel="prefetch" href="/assets/js/11.b43da688.js"><link rel="prefetch" href="/assets/js/12.0bf43118.js"><link rel="prefetch" href="/assets/js/13.9a581397.js"><link rel="prefetch" href="/assets/js/14.751337b4.js"><link rel="prefetch" href="/assets/js/15.2ba46b8f.js"><link rel="prefetch" href="/assets/js/16.5478534b.js">
+    <link rel="stylesheet" href="/assets/css/17.styles.1e39e98b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      李华卿's Home
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">个人简介</a></div><div class="nav-item"><a href="/share.html" class="nav-link">分享</a></div><div class="nav-item"><a href="/design.html" class="nav-link">梳理与设计</a></div><!----></nav></div></header><div class="sidebar-mask"></div><div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">个人简介</a></div><div class="nav-item"><a href="/share.html" class="nav-link">分享</a></div><div class="nav-item"><a href="/design.html" class="nav-link">梳理与设计</a></div><!----></nav><ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading open"><span>内存模型</span><!----></p><ul class="sidebar-group-items"><li><a href="/redis.html#查看命令-info-memory" class="sidebar-link">查看命令 info memory</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/redis.html#内存划分" class="sidebar-link">内存划分</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/redis.html#内存原理" class="sidebar-link">内存原理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/redis.html#jemalloc" class="sidebar-link">jemalloc</a></li><li class="sidebar-sub-header"><a href="/redis.html#redisobject-16byte" class="sidebar-link">redisObject 16Byte</a></li><li class="sidebar-sub-header"><a href="/redis.html#sds" class="sidebar-link">SDS</a></li><li class="sidebar-sub-header"><a href="/redis.html#redis对象编码" class="sidebar-link">redis对象编码</a></li><li class="sidebar-sub-header"><a href="/redis.html#集合set" class="sidebar-link">集合Set</a></li><li class="sidebar-sub-header"><a href="/redis.html#有序集合-zset" class="sidebar-link">有序集合 zset</a></li></ul></li><li><a href="/redis.html#高可用" class="sidebar-link">高可用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/redis.html#主从复制" class="sidebar-link">主从复制</a></li><li class="sidebar-sub-header"><a href="/redis.html#全量复制与部分复制" class="sidebar-link">全量复制与部分复制</a></li><li class="sidebar-sub-header"><a href="/redis.html#故障切换" class="sidebar-link">故障切换</a></li><li class="sidebar-sub-header"><a href="/redis.html#哨兵机制" class="sidebar-link">哨兵机制</a></li><li class="sidebar-sub-header"><a href="/redis.html#哨兵实现原理" class="sidebar-link">哨兵实现原理</a></li><li class="sidebar-sub-header"><a href="/redis.html#哨兵配置" class="sidebar-link">哨兵配置</a></li><li class="sidebar-sub-header"><a href="/redis.html#实践" class="sidebar-link">实践</a></li><li class="sidebar-sub-header"><a href="/redis.html#哨兵的问题" class="sidebar-link">哨兵的问题</a></li></ul></li><li><a href="/redis.html#redis集群" class="sidebar-link">Redis集群</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/redis.html#集群搭建" class="sidebar-link">集群搭建</a></li><li class="sidebar-sub-header"><a href="/redis.html#集群架构设计" class="sidebar-link">集群架构设计</a></li><li class="sidebar-sub-header"><a href="/redis.html#实现原理-2" class="sidebar-link">实现原理</a></li><li class="sidebar-sub-header"><a href="/redis.html#集群客户端使用方法" class="sidebar-link">集群客户端使用方法</a></li><li class="sidebar-sub-header"><a href="/redis.html#最佳实践" class="sidebar-link">最佳实践</a></li></ul></li></ul></div></li></ul></div><div class="page"><div class="content"><h1 id="内存模型"><a href="#内存模型" aria-hidden="true" class="header-anchor">#</a> 内存模型</h1><h2 id="查看命令-info-memory"><a href="#查看命令-info-memory" aria-hidden="true" class="header-anchor">#</a> 查看命令 info memory</h2><p>used_memory : redis分配器分配的内存(内存+虚拟内存)
+used_memory_rss : 操作系统角度redis使用的内存(redis进程 + 数据 + 碎片)
+mem_fragmentation_ratio : 内存碎片率 &gt;1 越大则表明碎片很多 &lt; 1 越小则表明虚拟内存很多
+mem_allocator : 内存分配器</p><h2 id="内存划分"><a href="#内存划分" aria-hidden="true" class="header-anchor">#</a> 内存划分</h2><p>数据
+进程本身运行内存
+缓存内存:客户端缓冲区,复制积压缓冲区,AOF缓冲区
+内存碎片:如果对数据频繁修改,数据大小相差也较大,会产生内存碎片.可以通过安全重启解决(重新加载备份文件).</p><h2 id="内存原理"><a href="#内存原理" aria-hidden="true" class="header-anchor">#</a> 内存原理</h2><p>redis是K-V存储,因此每个键值对都是DictEntry{key,value,next}
+key - sds
+value - redisObject{type,ptr} -&gt; type - 表示数据类型 value - 每种类型数据结构不同</p><h3 id="jemalloc"><a href="#jemalloc" aria-hidden="true" class="header-anchor">#</a> jemalloc</h3><p>libc , jemalloc, tcmalloc
+默认jemalloc 优点:减小内存碎片
+原理:
+内存分区:小,大,巨大,每个里面又有多个内存块. 当存储数据时,根据对象大小,分配最合适的内存块.</p><h3 id="redisobject-16byte"><a href="#redisobject-16byte" aria-hidden="true" class="header-anchor">#</a> redisObject 16Byte</h3><p>所有类型的数据都会封装为redisObject,因为对象类型,内部编码,内存回收,对象共享都需要redisObject支持,类似java的Object意义
+typedef struct redisObject {
+　　unsigned type:4;
+　　unsigned encoding:4;
+　　unsigned lru:REDIS_LRU_BITS; /* lru time (relative to server.lruclock) */
+　　int refcount;
+　　void *ptr;
+}</p><h4 id="type-4bit"><a href="#type-4bit" aria-hidden="true" class="header-anchor">#</a> type 4bit</h4><p>表示对象类型</p><h4 id="encoding-4bit"><a href="#encoding-4bit" aria-hidden="true" class="header-anchor">#</a> encoding 4bit</h4><p>表示编码类型,每个数据类型至少有2种编码类型
+string:int,raw,embstr
+列表:压缩列表,双端链表 元素少时使用压缩列表,元素多时,转化为双端链表</p><h4 id="lru-4-0-24bit-2-6-22bit"><a href="#lru-4-0-24bit-2-6-22bit" aria-hidden="true" class="header-anchor">#</a> lru 4.0 24bit 2.6 22bit</h4><p>用于记录上次访问时间
+object idletime命令可以显示该空转时间
+当内存回收算法选择的是volatile-lru或allkeys—lru,当Redis内存占用超过maxmemory指定的值时，Redis会优先选择空转时间最长的对象进行释放</p><h4 id="refcount-4byte"><a href="#refcount-4byte" aria-hidden="true" class="header-anchor">#</a> refcount 4Byte</h4><p>记录被引用,共享的次数,创建时为1,多一次被引用++ ,为0时回收.
+Redis为了节省内存，当有一些对象重复出现时，新的程序不会创建新的对象，而是仍然使用原来的对象。这个被重复使用的对象，就是共享对象。目前共享对象仅支持整数值的字符串对象。</p><p>为什么只对整数共享?
+是对内存与CPU的平衡,共享会减少内存,但是需要更多时间来实现共享.
+整数时间复杂度1,字符串n,其他数据结构n方</p><p>redis在服务器初始化时,会创建0~9999的整数共享对象</p><h4 id="ptr-8byte"><a href="#ptr-8byte" aria-hidden="true" class="header-anchor">#</a> ptr 8Byte</h4><p>指向具体数据指针</p><h3 id="sds"><a href="#sds" aria-hidden="true" class="header-anchor">#</a> SDS</h3><p>struct sdshdr {
+int len;
+int free;
+char buf[];
+}</p><p>buf表示字节数据,用来存储字符串
+len表示已使用的长度
+free表示未使用长度</p><p>buf大小 = len + free + 1 (以'\0'表示结尾)
+SDS空间大小 = len + free + buf = 4+4+free+len+1 = 9 + free+len</p><p>SDS与C字符串对比
+获取字符串长度：SDS是O(1)，C字符串是O(n)
+缓冲区溢出：使用C字符串的API时，如果字符串长度增加（如strcat操作）而忘记重新分配内存，很容易造成缓冲区的溢出；而SDS由于记录了长度，相应的API在可能造成缓冲区溢出时会自动重新分配内存，杜绝了缓冲区溢出。
+修改字符串时内存的重分配：对于C字符串，如果要修改字符串，必须要重新分配内存（先释放再申请），因为如果没有重新分配，字符串长度增大时会造成内存缓冲区溢出，字符串长度减小时会造成内存泄露。而对于SDS，由于可以记录len和free，因此解除了字符串长度和空间数组长度之间的关联，可以在此基础上进行优化：空间预分配策略（即分配内存时比实际需要的多）使得字符串长度增大时重新分配内存的概率大大减小；惰性空间释放策略使得字符串长度减小时重新分配内存的概率大大减小。
+存取二进制数据：SDS可以，C字符串不可以。因为C字符串以空字符作为字符串结束的标识，而对于一些二进制文件（如图片等），内容可能包括空字符串，因此C字符串无法正确存取；而SDS以字符串长度len来作为字符串结束标识，因此没有这个问题。</p><h3 id="redis对象编码"><a href="#redis对象编码" aria-hidden="true" class="header-anchor">#</a> redis对象编码</h3><p>为什么要有2种以上编码形式?
+1.接口实现分离,修改编码上层不受影响
+2.策略模式,适配更多场景</p><p>编码原则:写入时编码,过程不可逆,只能从小内存编码转大内存编码</p><h4 id="字符串"><a href="#字符串" aria-hidden="true" class="header-anchor">#</a> 字符串</h4><p>最多不超过512M
+int编码:8个字节的长整型。字符串值是整型时，这个值使用long整型表示.
+embstr编码 &lt;=39字节的字符串 (39 + 16redisObj长度 + 9sds非字符串长度 = 64) :redisObject与SDS连续,一次分配,适用于只读
+raw编码 &gt;39字节的字符串 :redisObject与SDS不连续,两次分配</p><p>编码转换:int超过long最大值 转换为raw,embstr修改后转换为raw</p><h4 id="列表list"><a href="#列表list" aria-hidden="true" class="header-anchor">#</a> 列表List</h4><p>列表支持两端插入和弹出,可以充当数组,队列,栈
+zipList编码:连续内存块实现,节省内存空间,变更时复杂度较高,节点少时使用
+使用ziplist必须同时满足2个条件:
+1.列表中元素数量小于512个;
+2.列表中所有字符串对象都不足64字节(不包括sds的大小,因为压缩列表使用连续定长内存块存储字符串);
+linkedList编码:由list和node组合,双端链表保存了头和尾指针,每个node有前后指针</p><h4 id="哈希hash"><a href="#哈希hash" aria-hidden="true" class="header-anchor">#</a> 哈希Hash</h4><p>zipList编码:用于元素个数较少的场景,节省空间,单时间复杂度较高,元素少时没有明显劣势
+HashTable编码:一个hashtable由1个dict结构、2个dictht结构、1个dictEntry指针数组（称为bucket）和多个dictEntry结构组成。</p><h5 id="dictentry-24字节"><a href="#dictentry-24字节" aria-hidden="true" class="header-anchor">#</a> dictEntry 24字节</h5><p>typedef struct dictEntry{
+void *key;
+union{
+void *val;
+uint64_tu64;
+int64_ts64;
+}v;
+struct dictEntry *next;
+}dictEntry;</p><p>key:键
+value:可能是指针,64位整型,无符号整型
+next:下一个dictEntry,用于解决hash冲突(hashMap的链表)</p><h5 id="bucket"><a href="#bucket" aria-hidden="true" class="header-anchor">#</a> bucket</h5><p>数组,每个元素为dictEntry的指针,大小为&gt;dictEntry最小的2^n;dictEntry=1000 bucket大小为1024</p><h5 id="dictht"><a href="#dictht" aria-hidden="true" class="header-anchor">#</a> dictht</h5><p>typedef struct dictht{
+dictEntry **table;
+unsigned long size;
+unsigned long sizemask;
+unsigned long used;
+}dictht;</p><p>table属性是一个指针，指向bucket；
+size属性记录了哈希表的大小，即bucket的大小；
+used记录了已使用的dictEntry的数量；
+sizemask属性的值总是为size-1，这个属性和哈希值一起决定一个键在table中存储的位置。(和hashMap jdk1.7的index实现类似 当size是2的次幂时,mod等价于 &amp; size -1)</p><h5 id="dict"><a href="#dict" aria-hidden="true" class="header-anchor">#</a> dict</h5><p>typedef struct dict{
+dictType *type;
+void *privdata;
+dictht ht[2];
+int trehashidx;
+} dict;</p><p>type属性和privdata属性是为了适应不同类型的键值对，用于创建多态字典。
+ht属性和trehashidx属性则用于rehash.
+通常情况下，所有的数据都是存在放dict的ht[0]中，ht[1]只在rehash的时候使用。dict进行rehash操作的时候，将ht[0]中的所有数据rehash到ht[1]中。然后将ht[1]赋值给ht[0]，并清空ht[1]。</p><p>编码转换同ziplist,数量&lt;512 &amp;&amp; 所有key和value长度小于64</p><h3 id="集合set"><a href="#集合set" aria-hidden="true" class="header-anchor">#</a> 集合Set</h3><p>set无序,不会有重复,无法通过下标操作元素,支持取交集,并集,差集</p><p>####编码
+intset:
+typedef struct intset{
+uint32_t encoding;
+uint32_t length;
+int8_t contents[];
+} intset;
+contents存储数据
+encoding代表contents中存储内容的类型，虽然contents（存储集合中的元素）是int8_t类型，但实际上其存储的值是int16_t、int32_t或int64_t
+length表示元素个数</p><p>优势:节省空间,查询复杂度高,适用于元素少且小
+条件:都是整数,元素&lt;512</p><p>hashtable:同上</p><h3 id="有序集合-zset"><a href="#有序集合-zset" aria-hidden="true" class="header-anchor">#</a> 有序集合 zset</h3><p>元素是有序的,根据设置的score排序</p><h4 id="编码"><a href="#编码" aria-hidden="true" class="header-anchor">#</a> 编码</h4><p>ziplist编码:同上
+skiplist编码:
+跳跃表是一种有序数据结构，通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。
+除了跳跃表，实现有序数据结构的另一种典型实现是平衡树；
+大多数情况下，跳跃表的效率可以和平衡树媲美，且跳跃表实现比平衡树简单很多，因此redis中选用跳跃表代替平衡树。
+跳跃表支持平均O(logN)、最坏O(N)的复杂点进行节点查找，并支持顺序操作。
+Redis的跳跃表实现由zskiplist和zskiplistNode两个结构组成：
+前者用于保存跳跃表信息（如头结点、尾节点、长度等），后者用于表示跳跃表节点。具体结构相对比较复杂，略。</p><h2 id="高可用"><a href="#高可用" aria-hidden="true" class="header-anchor">#</a> 高可用</h2><p>持久化(单机问题)
+主从复制(横向扩展)
+哨兵机制(自动恢复)
+集群(写操作负载均衡,分片)</p><p>###持久化</p><h4 id="rdb"><a href="#rdb" aria-hidden="true" class="header-anchor">#</a> RDB</h4><p>当前进程中的数据生成快照保存到硬盘</p><h5 id="触发条件"><a href="#触发条件" aria-hidden="true" class="header-anchor">#</a> 触发条件:</h5><p>1.手动触发:bgsave save
+2.自动触发:save m n e.g.:save 900 1 当时间到900秒时，如果redis数据发生了至少1次变化，则执行bgsave;</p><h6 id="save原理"><a href="#save原理" aria-hidden="true" class="header-anchor">#</a> save原理:</h6><p>serverCron + dirty计数器 + lastsave时间戳实现
+serverCron:Redis服务器的周期性操作函数，默认每隔100ms执行一次；
+dirty:记录上次save后操作了多少次
+lastsave:保存上次save的时间戳</p><p>原理:
+定期扫描,当前时间 - lastsave &gt; m &amp;&amp; dirty &gt; n do save</p><p>其他触发条件:
+主从全量复制 &amp; shutdown</p><h6 id="流程"><a href="#流程" aria-hidden="true" class="header-anchor">#</a> 流程:</h6><ol><li><p>Redis父进程首先判断：当前是否在执行save，如果在执行则直接返回。主要是基于性能方面的考虑：两个并发的子进程同时执行大量的磁盘写操作，可能引起严重的性能问题。</p></li><li><p>父进程执行fork操作创建子进程，这个过程中父进程是阻塞的，Redis不能执行来自客户端的任何命令</p></li><li><p>父进程fork后，bgsave命令返回”Background saving started”信息并不再阻塞父进程，并可以响应其他命令</p></li><li><p>子进程创建RDB文件，根据父进程内存快照生成临时快照文件，完成后对原有文件进行原子替换</p></li><li><p>子进程发送信号给父进程表示完成，父进程更新统计信息</p></li></ol><h5 id="rdb文件原理"><a href="#rdb文件原理" aria-hidden="true" class="header-anchor">#</a> rdb文件原理</h5><p>&quot;REDIS&quot;(常量字符串) +  db_version + selectDB0(数据库序号) + pairs(key,value,类型,过期时间) + …… + selectDBN + EOF + checksum</p><p>通过LZF算法压缩,压缩的是数据库中超过20字节的数据</p><h5 id="启动加载"><a href="#启动加载" aria-hidden="true" class="header-anchor">#</a> 启动加载</h5><p>启动时,如果没开启AOF,则加载rdb文件</p><h5 id="rdb常用配置"><a href="#rdb常用配置" aria-hidden="true" class="header-anchor">#</a> rdb常用配置</h5><p>save m n
+stop-writes-on-bgsave-error yes：当bgsave出现错误时，Redis是否停止执行写命令；
+rdbcompression yes：是否开启RDB文件压缩
+rdbchecksum yes：是否开启RDB文件的校验
+dbfilename dump.rdb：RDB文件名
+dir ./：RDB文件和AOF文件所在目录</p><h4 id="aof"><a href="#aof" aria-hidden="true" class="header-anchor">#</a> AOF</h4><p>将单次操作命令记录到日志
+AOF实时性更好,但会更大,AOF适用于同步,RDB适用于网络传输,主从复制</p><h5 id="流程-2"><a href="#流程-2" aria-hidden="true" class="header-anchor">#</a> 流程</h5><p>1.命令追加(append)：将Redis的写命令追加到缓冲区aof_buf；
+避免IO阻塞redis主线程</p><p>2.文件写入(write)和文件同步(sync)：根据不同的同步策略将aof_buf中的内容同步到硬盘；
+有多种策略:
+1)always,每次操作都会写文件,吞吐很低,几百TPS
+2)no,只写入系统缓冲区(write),又操作系统来写入问题,同步周期大约30秒,周期不可用,安全性缺少保证
+3)everysec,每秒调用fsync进行同步</p><p>3.文件重写(rewrite)：定期重写AOF文件，达到压缩的目的。
+重写是指将进程内数据转化为写命令,不会操作旧的AOF文件
+能压缩的原因:</p><ol><li>过期数据不用写入</li><li>无效命令不再写入</li><li>多条命令合并,存在临界值,超过临界值则拆分</li></ol><p>文件重写的触发条件:
+手动bgrewriteaof
+自动触发必须同时满足下面两个条件:
+1)auto-aof-rewrite-min-size：执行AOF重写时，文件的最小体积，默认值为64MB。
+2)auto-aof-rewrite-percentage：执行AOF重写时，当前AOF大小(即aof_current_size)和上一次重写时AOF大小(aof_base_size)的比值。</p><p>重写流程:</p><ol><li><p>Redis父进程首先判断当前是否存在正在执行,存在则直接返回。</p></li><li><p>父进程执行fork操作创建子进程，这个过程中父进程是阻塞的。</p></li></ol><p>3.1) 父进程fork后，bgrewriteaof命令返回”Background append only file rewrite started”信息并不再阻塞父进程，并可以响应其他命令。Redis的所有写命令依然写入AOF缓冲区，并根据appendfsync策略同步到硬盘，保证原有AOF机制的正确。</p><p>3.2) 双写aof和rewrite缓冲区,由于fork操作使用写时复制技术，子进程只能共享fork操作时的内存数据。由于父进程依然在响应命令，因此Redis使用AOF重写缓冲区(图中的aof_rewrite_buf)保存这部分数据，防止新AOF文件生成期间丢失这部分数据。
+备注:在操作系统fork的实际实现中，基本都采用了写时复制技术，即在父/子进程试图修改数据空间之前，父子进程实际上共享数据空间；但是当父/子进程的任何一个试图修改数据空间时，操作系统会为修改的那一部分(内存的一页)制作一个副本。
+4) 子进程根据内存快照，按照命令合并规则写入到新的AOF文件。</p><p>5.1) 子进程写完新的AOF文件后，向父进程发信号，父进程更新统计信息。</p><p>5.2) 父进程把AOF重写缓冲区的数据写入到新的AOF文件，这样就保证了新AOF文件所保存的数据库状态和服务器当前状态一致。</p><p>5.3) 使用新的AOF文件替换老文件，完成AOF重写。</p><h5 id="启动加载-2"><a href="#启动加载-2" aria-hidden="true" class="header-anchor">#</a> 启动加载</h5><p>AOF优先于RDB</p><ol><li>校验文件</li><li>开启伪客户端,因为aof是客户端执行,依赖客户端上下文,因此开启无网络客户端</li><li>完成</li></ol><h5 id="常用配置"><a href="#常用配置" aria-hidden="true" class="header-anchor">#</a> 常用配置</h5><p>appendonly no：是否开启AOF
+appendfsync everysec：fsync持久化策略
+no-appendfsync-on-rewrite no：AOF重写期间是否禁止fsync；如果开启该选项，可以减轻文件重写时CPU和硬盘的负载（尤其是硬盘）
+auto-aof-rewrite-percentage 100：文件重写触发条件之一
+auto-aof-rewrite-min-size 64mb：文件重写触发提交之一</p><h4 id="选型"><a href="#选型" aria-hidden="true" class="header-anchor">#</a> 选型</h4><h5 id="优缺点"><a href="#优缺点" aria-hidden="true" class="header-anchor">#</a> 优缺点</h5><p>RDB优点:体积小,生成时性能损耗小
+RDB缺点:实时性,兼容性差
+AOF优点:秒级实时性,兼容性好
+AOF缺点:文件大,恢复速度慢,性能影响大</p><h5 id="选型-2"><a href="#选型-2" aria-hidden="true" class="header-anchor">#</a> 选型</h5><ol><li>如果redis对数据安全性,持久性要求低,可以使用RDB</li><li>大多数情况使用AOF</li></ol><h5 id="tip"><a href="#tip" aria-hidden="true" class="header-anchor">#</a> Tip</h5><p>fork阻塞：CPU的阻塞
+虽然fork时，子进程不会复制父进程的数据空间，但是会复制内存页表（页表相当于内存的索引、目录）；父进程的数据空间越大，内存页表越大，fork时复制耗时也会越多。
+监控:latest_fork_usec值</p><p>AOF追加阻塞：硬盘的阻塞
+背景:如果硬盘负载过高，那么fsync操作可能会超过1s；如果Redis主线程持续高速向aof_buf写入命令，硬盘的负载可能会越来越大，IO资源消耗更快；如果此时Redis进程异常退出，丢失的数据也会越来越多，可能远超过1s。
+解决策略:主线程每次进行AOF会对比上次fsync成功的时间；如果距上次不到2s，主线程直接返回；如果超过2s，则主线程阻塞直到fsync同步完成
+监控:aof_delayed_fsync值</p><h3 id="主从复制"><a href="#主从复制" aria-hidden="true" class="header-anchor">#</a> 主从复制</h3><p>单机使用持久化方式来做灾备,当机器无法支撑时,需建立主从架构来实现读写分离.主从复制用于数据同步,单向从主同步到从.</p><p>主从复制的作用:
+1.数据冗余
+2.故障恢复
+3.负载均衡
+4.高可用基石:主从复制是哨兵和集群的基石</p><h4 id="开启复制方法"><a href="#开启复制方法" aria-hidden="true" class="header-anchor">#</a> 开启复制方法</h4><p>1.配置文件 slaveof
+2.启动命令 --slaveof
+3.客户端命令 slaveof</p><h4 id="断开复制"><a href="#断开复制" aria-hidden="true" class="header-anchor">#</a> 断开复制</h4><p>slaveof no one</p><h4 id="实现原理"><a href="#实现原理" aria-hidden="true" class="header-anchor">#</a> 实现原理</h4><p>主从复制过程大体可以分为3个阶段：连接建立阶段（即准备阶段）、数据同步阶段、命令传播阶段；</p><h5 id="建立连接"><a href="#建立连接" aria-hidden="true" class="header-anchor">#</a> 建立连接</h5><p>1.保存主节点信息,salveof命令后,保存主节点host和port,返回ok,开始异步操作</p><p>2.建立socket连接
+1).建立socket连接,从节点每秒调用replicationCron(),尝试与主节点建立socket连接,直到连接成功.
+2).连接成功后,从节点创建专门处理复制工作的线程,接受RDB和命令传播等.
+3).主节点为从节点socket创建客户端状态,后续从通过客户端命令形式操作.</p><p>3.发送ping命令
+若成功返回pong,则继续进行
+若超时或返回其他结果,则断开连接,重新建立连接</p><p>4.身份验证
+如果从节点设置了masterauth,则向主节点请求验证,若和主节点一致,则验证通过.</p><p>5.发送从节点信息
+向主节点发送端口号信息,主节点将信息保存到从节点连接的客户端slave_listening_port字段中.</p><h5 id="数据同步"><a href="#数据同步" aria-hidden="true" class="header-anchor">#</a> 数据同步</h5><p>从节点通过psync命令来执行数据同步</p><p>同步过程中,从节点为主节点建立客户端,以便后续命令传播</p><h5 id="命令传播"><a href="#命令传播" aria-hidden="true" class="header-anchor">#</a> 命令传播</h5><p>传播命令 + 心跳检测</p><p>一致性:
+异步传播,存在延迟,延迟主要因素:网络状况,传播频率,repl-disable-tcp-nodelay配置等
+repl-disable-tcp-nodelay=yes 则按一定频率(约40ms,和操作系统有关)发包,延迟会高,带宽会低.</p><h3 id="全量复制与部分复制"><a href="#全量复制与部分复制" aria-hidden="true" class="header-anchor">#</a> 全量复制与部分复制</h3><p>全量复制:在初次同步或无法部分复制的情况下进行,操作较重.
+部分复制:同步中断期间的增量,如果中断时间过长,则主节点无法保存期间的写命令,则只能进行全量同步.</p><h4 id="全量复制"><a href="#全量复制" aria-hidden="true" class="header-anchor">#</a> 全量复制</h4><p>psync: 主异步生成RDB -&gt; 主增量写缓冲 -&gt; 从加载rdb -&gt; 从执行增量命令 -&gt; 从重写AOF</p><p>1.主节点收到全量复制的命令后，执行bgsave，生成RDB，并使用一个缓冲区（称为复制缓冲区）开始执行的所有写命令</p><p>2.bgsave完成后，将RDB文件发送给从节点；从节点载入接收的RDB文件，数据更新至主节点执行bgsave时的数据库状态</p><p>3.主节点将复制缓冲区中的所有写命令发送给从节点，从节点执行这些写命令，将数据库状态更新至主节点的最新状态</p><p>4.如果从节点开启了AOF，则会触发bgrewriteaof的执行，从而保证AOF文件更新至主节点的最新状态</p><h4 id="部分复制"><a href="#部分复制" aria-hidden="true" class="header-anchor">#</a> 部分复制</h4><p>三个概念:
+1.复制偏移量:offset:master,salve各自维护一个,分别代表同步的字节数
+2.复制积压缓冲区:队列,1MB.传播阶段会先传播写命令,同时双写缓冲区.当从节点落后的数据超过缓冲区备份范围时,则只能全量同步.
+3.服务器运行id(runid):redis启动时会生成40个随机16进制字符,从节点会保存,若runid不一致,则全量同步,一致则判断能否部分同步.</p><h4 id="心跳机制"><a href="#心跳机制" aria-hidden="true" class="header-anchor">#</a> 心跳机制</h4><p>主要用于超时判断,数据安全等.</p><ol><li>主-&gt;从 ping
+PING发送的频率由repl-ping-slave-period参数控制，单位是秒，默认值是10s。</li><li>从-&gt;主：REPLCONF ACK
+频率是每秒1次；命令格式为：REPLCONF ACK {offset}
+作用:
+1.监测从节点延迟情况
+2.通过offset监测命令丢失,如果丢包,则会从缓冲区重新发送
+3.辅助保证从节点的数量和延迟
+min-slaves-to-write和min-slaves-max-lag参数来保证主节点在不安全的情况下不会执行写命令
+例如min-slaves-to-write=3 min-slaves-max-lag=10
+含义是如果从节点数量小于3个，或所有从节点的延迟值都大于10s，则主节点拒绝执行写命令。</li></ol><h4 id="一致性"><a href="#一致性" aria-hidden="true" class="header-anchor">#</a> 一致性</h4><p>优化:
+1.优化网络环境
+2.监控延迟,过大则读master
+3.使用集群同时扩展写负载和读负载</p><p>slave-serve-stale-data = yes 则数据同步阶段也可以响应请求,不安全</p><h4 id="过期策略"><a href="#过期策略" aria-hidden="true" class="header-anchor">#</a> 过期策略</h4><p>单机版:
+惰性删除:查询时判断是否删除
+定期删除:定时检测删除,考虑到负载,执行时间和频率有限制.</p><p>主从场景:
+3.2之前从节点不进行删除,不能保证数据过期会删除.
+3.2中增加了对过期的判断,过期则不返回.</p><h3 id="故障切换"><a href="#故障切换" aria-hidden="true" class="header-anchor">#</a> 故障切换</h3><p>无哨兵场景下,需要切换redis链接.</p><h4 id="复制超时"><a href="#复制超时" aria-hidden="true" class="header-anchor">#</a> 复制超时</h4><p>超时的意义:
+1.主节点判断超时,则释放资源,避免资源浪费.
+2.从节点判断超时,则重新建立链接.</p><p>判断机制
+repl-timeout参数，默认60s，对于主节点和从节点同时有效</p><p>1.主节点：每秒1次调用复制定时函数replicationCron()，
+判断当前时间距离上次收到各个从节点REPLCONF ACK的时间，是否超过了repl-timeout值，如果超过了则释放相应从节点的连接。</p><p>2.从节点：从节点对超时的判断同样是在复制定时函数中判断，基本逻辑是：</p><p>如果当前处于连接建立阶段，且距离上次收到主节点的信息的时间已超过repl-timeout，则释放与主节点的连接；
+如果当前处于数据同步阶段，且收到主节点的RDB文件的时间超时，则停止数据同步，释放连接；
+如果当前处于命令传播阶段，且距离上次收到主节点的PING命令或数据的时间已超过repl-timeout值，则释放与主节点的连接。</p><p>case:
+1.master数据较多,生成rdb超时,则会无限重试,无限生成rdb
+解决方案:
+1.监控内存容量
+2.监控bgsave时间
+3.调整超时时间</p><h4 id="复制中断问题"><a href="#复制中断问题" aria-hidden="true" class="header-anchor">#</a> 复制中断问题</h4><p>除了超时,复制缓冲区溢出也会导致中断</p><p>1.数据同步过程中,增量命令写缓冲区溢出,则会失败. 容易造成死循环
+解决方案:client-output-buffer-limit slave 256MB 64MB 60
+如果buffer大于256MB，或者连续60s大于64MB，则主节点会断开与该从节点的连接.
+Tip:复制缓冲区 与 复制积压缓冲区是两个概念,复制缓冲区用于数据同步,一个salve一个buffer,积压缓冲区用户传播,只有一个</p><h4 id="主从同步tips"><a href="#主从同步tips" aria-hidden="true" class="header-anchor">#</a> 主从同步Tips</h4><p>1.多个从错峰同步
+2.可以使用树形拓扑,但延迟会增加
+3.主节点重启runid会变,导致全量同步,尽量使用debug reload
+4.网络中断较频繁时,增大积压缓冲区,避免全量同步</p><h3 id="哨兵机制"><a href="#哨兵机制" aria-hidden="true" class="header-anchor">#</a> 哨兵机制</h3><p>master/salve无法解决自动恢复问题,哨兵主要功能是主节点故障自动迁移
+主要功能:
+监控（Monitoring）：哨兵会不断地检查主节点和从节点是否运作正常。
+自动故障转移（Automatic failover）：master故障，哨兵会开始自动故障转移操作，它会将失效主节点的其中一个从节点升级为新的主节点，并让其他从节点改为复制新的主节点。
+配置提供者（Configuration provider）：客户端在初始化时，通过连接哨兵来获得当前Redis服务的主节点地址。
+通知（Notification）：哨兵可以将故障转移的结果发送给客户端。</p><h4 id="监控与failover"><a href="#监控与failover" aria-hidden="true" class="header-anchor">#</a> 监控与failover</h4><p>架构:
+哨兵节点：哨兵系统由一个或多个哨兵节点组成，哨兵节点是特殊的redis节点，不存储数据。
+数据节点：主节点和从节点都是数据节点。</p><p>配置:
+sentinel monitor mymaster 192.168.92.128 6379 2
+该哨兵节点监控192.168.92.128:6379这个主节点，该主节点的名称是mymaster
+最后的2的含义与主节点的故障判定有关：至少需要2个哨兵节点同意，才能判定主节点故障并进行故障转移。</p><p>启动:
+redis-sentinel sentinel-26379.conf
+redis-server sentinel-26379.conf --sentinel</p><p>总结(监控与自动恢复):
+1.哨兵系统中的主从节点，与普通的主从节点并没有什么区别，故障发现和转移是由哨兵来控制和完成的。</p><p>2.哨兵节点本质上是redis节点。</p><p>3.每个哨兵节点，只需要配置监控主节点，便可以自动发现其他的哨兵节点和从节点。</p><p>4.在哨兵节点启动和故障转移阶段，各个节点的配置文件会被重写(config rewrite)。</p><p>5.本章的例子中，一个哨兵只监控了一个主节点；实际上，一个哨兵可以监控多个主节点，通过配置多条sentinel monitor即可实现。</p><h4 id="配置与通知"><a href="#配置与通知" aria-hidden="true" class="header-anchor">#</a> 配置与通知</h4><p>1.配置提供者：客户端可以通过哨兵节点+masterName获取主节点信息，在这里哨兵起到的作用就是配置提供者。</p><p>需要注意的是，哨兵只是配置提供者，而不是代理。二者的区别在于：如果是配置提供者，客户端在通过哨兵获得主节点信息后，会直接建立到主节点的连接，后续的请求(如set/get)会直接发向主节点；如果是代理，客户端的每一次请求都会发向哨兵，哨兵再通过主节点处理请求。</p><p>2.通知：哨兵节点在故障转移完成后，会将新的主节点信息发送给客户端，以便客户端及时切换主节点。
+原理:利用redis提供的发布订阅功能，为每一个哨兵节点开启一个单独的线程，订阅哨兵节点的+switch-master频道，当收到消息时，重新初始化连接池</p><h3 id="哨兵实现原理"><a href="#哨兵实现原理" aria-hidden="true" class="header-anchor">#</a> 哨兵实现原理</h3><p>哨兵通信,通过命令实现
+1.基础信息查询
+info sentinel：获取监控的所有主节点的基本信息
+sentinel masters：获取监控的所有主节点的详细信息
+sentinel master mymaster：获取监控的主节点mymaster的详细信息
+sentinel slaves mymaster：获取监控的主节点mymaster的从节点的详细信息
+sentinel sentinels mymaster：获取监控的主节点mymaster的哨兵节点的详细信息
+sentinel get-master-addr-by-name mymaster：获取监控的主节点mymaster的地址信息，前文已有介绍
+sentinel is-master-down-by-addr：哨兵节点之间可以通过该命令询问主节点是否下线，从而对是否客观下线做出判断</p><p>2.增加,移除监控的主节点
+sentinel monitor mymaster2 192.168.92.128 16379
+sentinel remove mymaster2：取消当前哨兵节点对主节点mymaster2的监控</p><p>3.强制故障转移
+sentinel failover mymaster：该命令可以强制对mymaster执行故障转移，即便当前的主节点运行完好；
+例如，如果当前主节点所在机器即将报废，便可以提前通过failover命令进行故障转移.</p><h4 id="基本原理"><a href="#基本原理" aria-hidden="true" class="header-anchor">#</a> 基本原理</h4><p>1.3个定时任务:
+1)通过主节点info命令获取最新主从结构
+2)通过发布订阅,获取其他哨兵信息
+3)向其他节点发送ping,判断是否下线</p><p>2.主观下线
+如果节点超过一定时间没有回复,则哨兵主观的判断其下线</p><p>3.客观下线
+主观下线后,通过sentinel is-master-down-by-addr命令询问其他哨兵节点,当主观下线节点超过一定数量后,将会进行客观下线.
+客观下线只会对master, salve主观下线后,不会有后续的客观下线和故障转移</p><p>4.选举领导者哨兵节点
+客观下线后,会进行领导者哨兵选举,通过领导者哨兵,对master进行故障转移
+Raft算法,先到先得,一般先客观下线的哨兵会先成为领导者</p><p>5.故障转移
+1).选择原则:order by 优先级最高 ,offset大小最领先 , runid最小</p><h3 id="哨兵配置"><a href="#哨兵配置" aria-hidden="true" class="header-anchor">#</a> 哨兵配置</h3><p>sentinel monitor {masterName} {masterIp} {masterPort} {quorum} 核心配置 设置哨兵监听的主节点以及masterName
+sentinel down-after-milliseconds 未收到消息多少秒后进行主观下线
+sentinel parallel-syncs 主从切换后,主从复制的并发数量</p><h3 id="实践"><a href="#实践" aria-hidden="true" class="header-anchor">#</a> 实践</h3><p>1.多个哨兵,避免哨兵成为高可用瓶颈,避免误判
+2.哨兵数量奇数,用于选举</p><h3 id="哨兵的问题"><a href="#哨兵的问题" aria-hidden="true" class="header-anchor">#</a> 哨兵的问题</h3><p>1.并不能解决从节点的故障,可能会导致读服务不可用
+2.没有办法解决写负载过高的问题,只能通过集群,分片来做</p><h2 id="redis集群"><a href="#redis集群" aria-hidden="true" class="header-anchor">#</a> Redis集群</h2><p>集群中的节点分为主,从:主负责读和集群维护,从负责读和复制</p><p>集群的作用:
+1.数据分区分片
+2.高可用(支持主从复制,故障自动转移)</p><h3 id="集群搭建"><a href="#集群搭建" aria-hidden="true" class="header-anchor">#</a> 集群搭建</h3><p>1.使用命令
+2.使用脚本</p><p>集群的搭建可以分为四步：
+1.启动节点：将节点以集群模式启动，此时节点是独立的，并没有建立联系；
+配置中添加:
+cluster-enabled yes 开启集群模式
+cluster-config-file 该参数指定了集群配置文件的位置.
+每个节点在运行过程中，会维护一份集群配置文件；
+每当集群信息发生变化时（如增减节点），集群内所有节点会将最新信息更新到该配置文件；
+当节点重启后，会重新读取该配置文件，获取集群信息，可以方便的重新加入到集群中。</p><p>集群启动阶段没有主从关系,不需要配置salveof</p><p>2.节点握手：让独立的节点连成一个网络；
+cluster meet {ip} {port} 命令实现</p><p>3.分配槽：将16384个槽分配给主节点；
+集群分配16384个槽,槽负责数据管理,分片,迁移;
+所有槽都需要分配节点,如果存在未分配,则集群处于下线状态(fail)
+cluster addslots 命令分配槽</p><p>4.指定主从关系：为从节点指定主节点。
+cluster nodes指定从节点</p><p>也可以通过redis-trib.rb Ruby脚本实现</p><h3 id="集群架构设计"><a href="#集群架构设计" aria-hidden="true" class="header-anchor">#</a> 集群架构设计</h3><p>1.高可用要求: 至少3个主节点才能完成故障转移,主节点不应在同一物理机;每个主节点至少一个从节点,不应在同一物理机.
+2.数据量和访问量:根据业务未来发展,合理评估容量和访问量,计算需要的主节点个数.
+3.节点数量限制:不要超过1000,通信开销很大;过大需要拆分成小集群;
+4.适度冗余</p><h3 id="实现原理-2"><a href="#实现原理-2" aria-hidden="true" class="header-anchor">#</a> 实现原理</h3><h4 id="数据分区方案"><a href="#数据分区方案" aria-hidden="true" class="header-anchor">#</a> 数据分区方案</h4><p>1.顺序分区
+2.hash分区,具有天然的随机性,使用广泛
+Hash取舍分区,一致性Hash分区,虚拟节点一致性Hash分区</p><p>衡量好坏的标准:
+1.是否分布均匀
+2.节点增删是否会对分布有影响</p><p>Hash相对均匀,所以主要看中增减节点对数据的影响</p><h5 id="hash-mod分区"><a href="#hash-mod分区" aria-hidden="true" class="header-anchor">#</a> hash Mod分区</h5><p>足够均匀,问题是新增删除时会有大规模的rehash.</p><h5 id="一致性hash"><a href="#一致性hash" aria-hidden="true" class="header-anchor">#</a> 一致性hash</h5><p>hash空间组成虚拟的环,hash后找下一个最近的节点存储,变更时会影响一个节点.
+问题:节点较少时,对下一节点影响会比较大.</p><h5 id="虚拟分区一致性hash-redis集群方案"><a href="#虚拟分区一致性hash-redis集群方案" aria-hidden="true" class="header-anchor">#</a> 虚拟分区一致性hash(Redis集群方案)</h5><p>集群分为多个槽slot,一个node承载多个slot,当节点删除时,变动的槽均匀分布到多个node上.</p><h5 id="hash过程"><a href="#hash过程" aria-hidden="true" class="header-anchor">#</a> hash过程</h5><p>1.Redis对数据的特征值（一般是key）计算哈希值，使用的算法是CRC16。</p><p>2.根据哈希值，计算数据属于哪个槽。</p><p>3.根据槽与节点的映射关系，计算数据属于哪个节点。</p><h4 id="节点通信机制"><a href="#节点通信机制" aria-hidden="true" class="header-anchor">#</a> 节点通信机制</h4><h5 id="两个端口"><a href="#两个端口" aria-hidden="true" class="header-anchor">#</a> 两个端口:</h5><p>1.客户端端口,服务于客户端
+2.集群端口(客户端端口号 + 10000),服务于集群通信</p><h5 id="gossip协议"><a href="#gossip协议" aria-hidden="true" class="header-anchor">#</a> Gossip协议</h5><p>节点间通信主要是:P2P,广播,Gossip</p><p>广播收敛速度快,但是Cpu,带宽消耗大.
+Gossip通过随机点对点通信,收敛速度慢,cpu带宽开销小,去中心化.</p><h5 id="消息类型"><a href="#消息类型" aria-hidden="true" class="header-anchor">#</a> 消息类型:</h5><p>节点采用固定频率的定时任务进行通信工作(1秒10次)
+1.MEET消息 握手阶段,新节点加入集群消息</p><p>2.PING消息:包括自身节点和部分其他节点信息,用作信息交换,使用Gossip协议
+规则:
+1)随机找5个节点，在其中选择最久没有通信的1个节点
+2)扫描节点列表，选择最近一次收到PONG消息时间大于cluster_node_timeout/2的所有节点，防止这些节点长时间未更新</p><p>3.PONG消息:PONG消息封装了自身状态数据,可以分为两种
+第一种是在接到MEET/PING消息后回复的PONG消息；
+第二种是指节点向集群广播PONG消息，这样其他节点可以获知该节点的最新信息，例如故障恢复后新的主节点会广播PONG消息。</p><p>4.FAIL消息
+当一个主节点判断另一个主节点进入FAIL状态时，会向集群广播这一FAIL消息；接收节点会将这一FAIL消息保存起来，便于后续的判断。</p><p>5.PUBLISH消息：节点收到PUBLISH命令后，会先执行该命令，然后向集群广播这一消息，接收节点也会执行该PUBLISH命令。</p><h5 id="数据结构"><a href="#数据结构" aria-hidden="true" class="header-anchor">#</a> 数据结构</h5><p>点需要专门的数据结构来存储集群的状态。所谓集群的状态，是一个比较大的概念，包括：
+1.集群是否处于上线状态
+2.集群中有哪些节点
+3.节点是否可达
+4.节点的主从状态
+5.槽的分布
+6....等</p><p>最关键的是clusterNode和clusterState结构：前者记录了一个节点的状态，后者记录了集群作为一个整体的状态。</p><p>clusterNode
+typedef struct clusterNode {
+//节点创建时间
+mstime_t ctime;</p><pre><code>//节点id
+char name[REDIS_CLUSTER_NAMELEN];
+
+//节点的ip和端口号
+char ip[REDIS_IP_STR_LEN];
+int port;
+
+//节点标识：整型，每个bit都代表了不同状态，如节点的主从状态、是否在线、是否在握手等
+int flags;
+
+//配置纪元：故障转移时起作用，类似于哨兵的配置纪元
+uint64_t configEpoch;
+
+//槽在该节点中的分布：占用16384/8个字节，16384个比特；每个比特对应一个槽：比特值为1，则该比特对应的槽在节点中；比特值为0，则该比特对应的槽不在节点中
+unsigned char slots[16384/8];
+
+//节点中槽的数量
+int numslots;
+
+…………
+</code></pre><p>} clusterNode;</p><p>clusterState</p><p>typedef struct clusterState {</p><pre><code>//自身节点
+clusterNode *myself;
+
+//配置纪元
+uint64_t currentEpoch;
+
+//集群状态：在线还是下线
+int state;
+
+//集群中至少包含一个槽的节点数量
+int size;
+
+//哈希表，节点名称-&gt;clusterNode节点指针
+dict *nodes;
+
+//槽分布信息：数组的每个元素都是一个指向clusterNode结构的指针；如果槽还没有分配给任何节点，则为NULL
+clusterNode *slots[16384];
+
+…………
+</code></pre><p>} clusterState;</p><h5 id="集群命令实现原理"><a href="#集群命令实现原理" aria-hidden="true" class="header-anchor">#</a> 集群命令实现原理</h5><p>cluster meet
+假设要向A节点发送cluster meet命令，将B节点加入到A所在的集群，则A节点收到命令后，执行的操作如下：</p><p>1.A为B创建一个clusterNode结构，并将其添加到clusterState的nodes字典中</p><p>2.A向B发送MEET消息</p><p>3.B收到MEET消息后，会为A创建一个clusterNode结构，并将其添加到clusterState的nodes字典中</p><p>4.B回复A一个PONG消息</p><p>5.A收到B的PONG消息后，便知道B已经成功接收自己的MEET消息</p><p>6.然后，A向B返回一个PING消息</p><p>7.B收到A的PING消息后，便知道A已经成功接收自己的PONG消息，握手完成</p><p>8.之后，A通过Gossip协议将B的信息广播给集群内其他节点，其他节点也会与B握手；一段时间后，集群收敛，B成为集群内的一个普通节点</p><p>通过上述过程可以发现，集群中两个节点的握手过程与TCP类似，都是三次握手：A向B发送MEET；B向A发送PONG；A向B发送PING。</p><p>cluster addslots</p><p>cluster addslots命令接收一个槽或多个槽作为参数，例如在A节点上执行cluster addslots {0..10}命令，是将编号为0-10的槽分配给A节点，具体执行过程如下：</p><p>1.遍历输入槽，检查它们是否都没有分配，如果有一个槽已分配，命令执行失败；方法是检查输入槽在clusterState.slots[]中对应的值是否为NULL。</p><p>2.遍历输入槽，将其分配给节点A；方法是修改clusterNode.slots[]中对应的比特为1，以及clusterState.slots[]中对应的指针指向A节点</p><p>3.A节点执行完成后，通过节点通信机制通知其他节点，所有节点都会知道0-10的槽分配给了A节点</p><h3 id="集群客户端使用方法"><a href="#集群客户端使用方法" aria-hidden="true" class="header-anchor">#</a> 集群客户端使用方法</h3><h4 id="redis-cli"><a href="#redis-cli" aria-hidden="true" class="header-anchor">#</a> redis-cli</h4><p>如果key对应的slot在本节点,则直接操作,否则返回MOVED</p><h4 id="jediscluster"><a href="#jediscluster" aria-hidden="true" class="header-anchor">#</a> JedisCluster</h4><p>1.初始化时通过cluster slots命令缓存slot-&gt;node的关系
+2.失败时重新加载slot-&gt;node的关系</p><h3 id="最佳实践"><a href="#最佳实践" aria-hidden="true" class="header-anchor">#</a> 最佳实践</h3><h4 id="集群伸缩"><a href="#集群伸缩" aria-hidden="true" class="header-anchor">#</a> 集群伸缩</h4><p>新增节点:启动节点 -&gt; 握手 -&gt; 槽迁移(均分) -&gt; 指定主从关系
+减少节点:槽迁移 -&gt; 下线节点</p><p>ASK错误,当正在进行槽迁移时,会返回ask错误</p><h4 id="故障转移"><a href="#故障转移" aria-hidden="true" class="header-anchor">#</a> 故障转移</h4><p>与哨兵机制类似:主观下线 -&gt; 客观下线 —&gt; 从节点故障转移
+投票数量:N/2+1,由于故障master无法投票,因此集群master数量要&gt;=3</p><h4 id="failover时间"><a href="#failover时间" aria-hidden="true" class="header-anchor">#</a> failover时间</h4><p>所需要的时间主要消耗在主观下线识别、主观下线传播、选举延迟等几个环节.
+故障转移时间(毫秒) ≤ 1.5 * cluster-node-timeout + 1000</p><h4 id="hashtag"><a href="#hashtag" aria-hidden="true" class="header-anchor">#</a> HashTag</h4><p>背景:批量操作,事物需要在一个节点上执行,但是现有hash策略有可能会导致在多个节点
+方案:使用HashTag在批量操作时,作为hash计算slot的key</p><h4 id="参数优化"><a href="#参数优化" aria-hidden="true" class="header-anchor">#</a> 参数优化</h4><p>cluster_node_timeout 默认值15s，影响包括：</p><p>1.影响PING消息接收节点的选择：值越大对延迟容忍度越高，选择的接收节点越少，可以降低带宽，但会降低收敛速度；应根据带宽情况和应用要求进行调整。</p><p>2.影响故障转移的判定和时间：值越大，越不容易误判，但完成转移消耗时间越长；应根据网络状况和应用要求进行调整。</p><p>cluster-require-full-coverage
+只有当16384个槽全部分配完毕时，集群才能上线。这样做是为了保证集群的完整性，但同时也带来了新的问题：当主节点发生故障而故障转移尚未完成，原主节点中的槽不在任何节点中，此时会集群处于下线状态，无法响应客户端的请求。</p><p>cluster-require-full-coverage参数可以改变这一设定：如果设置为no，则当槽没有完全分配时，集群仍可以上线。参数默认值为yes，如果应用对可用性要求较高，可以修改为no，但需要自己保证槽全部分配。</p></div><!----><!----></div></div></div>
+    <script src="/assets/js/3.352ef2d1.js" defer></script><script src="/assets/js/app.ead676ba.js" defer></script>
+  </body>
+</html>
