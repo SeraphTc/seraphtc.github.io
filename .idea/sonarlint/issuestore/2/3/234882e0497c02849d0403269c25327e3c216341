@@ -1,0 +1,5 @@
+
+S
+java:S1128"1Remove this unused import 'java.util.Collection'.(¹ÉÐšùÿÿÿÿ8ß–î¾Í.
+U	java:S1066"9Replace this use of System.out or System.err by a logger.(Óîèñ8ÚÓþ¾Í.
+J	java:S108#")Either remove or fill this block of code.(Ù­è÷ùÿÿÿÿ8Ò–‘¿Í.

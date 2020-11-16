@@ -1,0 +1,15 @@
+
+Z	java:S106B"9Replace this use of System.out or System.err by a logger.(æüÏªıÿÿÿÿ8úˆ…çÍ.
+T	java:S106H"9Replace this use of System.out or System.err by a logger.(šü”,8Èí†çÍ.
+m
+java:S1149	"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(ùÜ­Ê8âûÉæÍ.
+Z	java:S106I"9Replace this use of System.out or System.err by a logger.(æüÏªıÿÿÿÿ8Ğ…çÍ.
+Z	java:S106K"9Replace this use of System.out or System.err by a logger.(æüÏªıÿÿÿÿ8Íô…çÍ.
+T	java:S106J"9Replace this use of System.out or System.err by a logger.(šü”,8Í´†çÍ.
+T	java:S106?"9Replace this use of System.out or System.err by a logger.(šü”,8Èí†çÍ.
+l
+java:S1149"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(‹›ö}8âûÉæÍ.
+Z	java:S106G"9Replace this use of System.out or System.err by a logger.(æüÏªıÿÿÿÿ8Ğ…çÍ.
+Z	java:S106@"9Replace this use of System.out or System.err by a logger.(æüÏªıÿÿÿÿ8úˆ…çÍ.
+T	java:S106A"9Replace this use of System.out or System.err by a logger.(šü”,8Èí†çÍ.
+T	java:S106F"9Replace this use of System.out or System.err by a logger.(šü”,8Èí†çÍ.
